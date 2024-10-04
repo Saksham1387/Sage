@@ -1,101 +1,119 @@
-import Image from "next/image";
-
+"use client";
+import Example from "@/Components/product";
+import { useState, useEffect } from "react";
+import { Navbar } from "@/Components/navbar";
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [query, setQuery] = useState("");
+  const [products, setProducts] = useState([]);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+  useEffect(() => {
+    if (query.trim() === "") {
+      setProducts([]); 
+      return;
+  }
+
+  const fetchProducts = async () => {
+      try {
+        const response = await fetch("/api/search", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ query }), 
+        });
+
+        const data = await response.json();
+        console.log(data);
+        setProducts(data); 
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    };
+
+    fetchProducts();
+  }, [query]); 
+
+  return (
+    <div>
+      <Navbar></Navbar>
+      <div className="flex items-center justify-center mt-16">
+        <input
+          type="text"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)} 
+          placeholder="Search for products..."
+          className="text-black rounded-xl border-gray-300 p-5 w-[500px] border-2"
+        />
+      </div>
+
+      <Example products={products} />
     </div>
   );
 }
+
+// "use client";
+// import Example from "@/Components/product";
+// import { useState, useEffect } from "react";
+// import { Navbar } from "@/Components/navbar";
+
+// export default function Home() {
+//   const [query, setQuery] = useState("");
+//   const [debouncedQuery, setDebouncedQuery] = useState(query);
+//   const [products, setProducts] = useState([]);
+
+//   // Debounce effect
+//   useEffect(() => {
+//     const handler = setTimeout(() => {
+//       setDebouncedQuery(query);
+//     }, 300); // Set debounce delay here (300ms)
+
+//     return () => {
+//       clearTimeout(handler); // Cleanup timeout on unmount or query change
+//     };
+//   }, [query]);
+
+//   // useEffect to send a request when debouncedQuery changes
+//   useEffect(() => {
+//     if (debouncedQuery.trim() === "") {
+//       setProducts([]); // Clear products if debounced query is empty
+//       return;
+//     }
+
+//     const fetchProducts = async () => {
+//       try {
+//         const response = await fetch("/api/search", {
+//           method: "POST",
+//           headers: {
+//             "Content-Type": "application/json",
+//           },
+//           body: JSON.stringify({ query: debouncedQuery }), // Send debounced query in the request body
+//         });
+
+//         const data = await response.json();
+//         setProducts(data); // Update the products state with the fetched data
+//       } catch (error) {
+//         console.error("Error fetching products:", error);
+//       }
+//     };
+
+//     fetchProducts();
+//   }, [debouncedQuery]); // Trigger effect when debouncedQuery changes
+
+//   return (
+//     <div>
+//       <Navbar />
+//       <div className="flex items-center justify-center mt-16">
+//         <input
+//           type="text"
+//           value={query}
+//           onChange={(e) => setQuery(e.target.value)} // Update query state on input change
+//           placeholder="Search for products..."
+//           className="text-black rounded-xl border-gray-300 p-5 w-[500px] border-2"
+//         />
+//       </div>
+
+//       {/* Render the Example component and pass products as props */}
+//       <Example products={products} />
+//     </div>
+//   );
+// }
