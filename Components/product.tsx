@@ -1,120 +1,26 @@
-// export default function Example({ products }: { products: any[] }) {
-//   const cleanImageUrl = (url: string) => {
-//     return url
-//       .replace("https:/", "https://") // Ensure correct protocol
-//       .replace(/['"\[\]]/g, ""); // Remove unwanted characters like brackets or quotes
-//   };
-
-//   return (
-//     <div className="bg-white">
-//       <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
-//         <h2 className="text-2xl font-bold tracking-tight text-gray-900">
-//           Products
-//         </h2>
-
-//         <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-//           {Array.isArray(products) && products.length > 0 ? (
-//             products.map((product) => {
-//               const productData = product || {};
-//               const {
-//                 product_name_y,
-//                 product_url_y,
-//                 product_images_y,
-//                 product_description_y,
-//                 product_price_y,
-//               } = productData;
-
-//               const cleanImages =
-//                   //@ts-ignore
-//                 product_images_y?.map((image) => cleanImageUrl(image)) || [];
-
-//               return (
-//                 <div
-//                   key={productData.product_id || Math.random()}
-//                   className="group relative"
-//                 >
-//                   <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
-//                     {cleanImages.length > 0 ? (
-//                       <img
-//                         alt={product_name_y || "Product image"}
-//                         src={cleanImages[0]}
-//                         className="h-full w-full object-cover object-center lg:h-full lg:w-full"
-//                       />
-//                     ) : (
-//                       <div className="h-full w-full bg-gray-300 flex items-center justify-center">
-//                         <span>No Image</span>
-//                       </div>
-//                     )}
-//                   </div>
-//                   <div className="mt-4 flex justify-between">
-//                     <div>
-//                       <h3 className="text-sm text-gray-700">
-//                         {product_name_y ? (
-//                           <a
-//                             href={product_url_y}
-//                             target="_blank"
-//                             rel="noopener noreferrer"
-//                           >
-//                             <span
-//                               aria-hidden="true"
-//                               className="absolute inset-0"
-//                             />
-//                             {product_name_y}
-//                           </a>
-//                         ) : (
-//                           <span>Unknown Product</span>
-//                         )}
-//                       </h3>
-//                       <p className="mt-1 text-sm text-gray-500">
-//                         {product_description_y
-//                           ? product_description_y.length > 100 // Set the character limit, e.g., 100
-//                             ? `${product_description_y.slice(0, 50)}...` // Trim and append ellipsis
-//                             : product_description_y
-//                           : "No description available"}
-//                       </p>
-//                     </div>
-//                     <p className="text-sm font-medium text-gray-900">
-//                       {product_price_y
-//                         ? `$${product_price_y}`
-//                         : "Score not available"}
-//                     </p>
-//                   </div>
-//                 </div>
-//               );
-//             })
-//           ) : (
-//             <div>No products available</div>
-//           )}
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
 import { useState, useEffect } from "react";
 import { ChevronDown } from "lucide-react"; // Tailwind Heroicons for the dropdown arrow
+
 
 export default function Example({ products }: { products: any[] }) {
   const [sortedProducts, setSortedProducts] = useState<any[]>([]);
   const [sortOrder, setSortOrder] = useState("default"); // "default", "lowToHigh", or "highToLow"
 
-  // Store the original product list
+
   const originalProducts = products || [];
 
-  // Initialize sortedProducts when products prop changes
   useEffect(() => {
     if (Array.isArray(products) && products.length > 0) {
       setSortedProducts(products);
     }
   }, [products]);
 
-  // Function to clean image URLs
   const cleanImageUrl = (url: string) => {
     return url
       .replace("https:/", "https://") // Ensure correct protocol
       .replace(/['"\[\]]/g, ""); // Remove unwanted characters like brackets or quotes
   };
 
-  // Sort function
   const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value;
     setSortOrder(value);
@@ -232,7 +138,12 @@ export default function Example({ products }: { products: any[] }) {
               );
             })
           ) : (
-            <div>No products available</div>
+            <div className=""> 
+            <div className="w-40 h-40">
+        
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><circle fill="#254f49" stroke="#254f49" stroke-width="15" r="15" cx="40" cy="100"><animate attributeName="opacity" calcMode="spline" dur="2" values="1;0;1;" keySplines=".5 0 .5 1;.5 0 .5 1" repeatCount="indefinite" begin="-.4"></animate></circle><circle fill="#254f49" stroke="#254f49" stroke-width="15" r="15" cx="100" cy="100"><animate attributeName="opacity" calcMode="spline" dur="2" values="1;0;1;" keySplines=".5 0 .5 1;.5 0 .5 1" repeatCount="indefinite" begin="-.2"></animate></circle><circle fill="#254f49" stroke="#254f49" stroke-width="15" r="15" cx="160" cy="100"><animate attributeName="opacity" calcMode="spline" dur="2" values="1;0;1;" keySplines=".5 0 .5 1;.5 0 .5 1" repeatCount="indefinite" begin="0"></animate></circle></svg>
+            </div>
+            </div>
           )}
         </div>
       </div>
