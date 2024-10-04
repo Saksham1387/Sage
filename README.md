@@ -1,6 +1,6 @@
 # Sage AI - Natural Language Recommendation System
 
-![Sage AI Screenshot](./public/Screenshot 2024-10-04 at 11.38.12.png)
+<img src="./public/Screenshot 2024-10-04 at 11.38.12.png" />
 
 **Sage AI** is an intelligent recommendation system that uses various AI techniques to provide personalized suggestions based on natural language inputs. This application leverages the power of AI to semantically understand user queries and offer recommendations in a user-friendly interface.
 
