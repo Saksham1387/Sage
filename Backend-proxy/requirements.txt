@@ -1,0 +1,7 @@
+flask
+elasticsearch
+faiss
+sentence_transformers
+joblib
+pandas
+numpy
