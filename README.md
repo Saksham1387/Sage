@@ -1,6 +1,6 @@
-Here’s the README.md in markdown format:
-
 # Sage AI - Natural Language Recommendation System
+
+![Sage AI Screenshot](./public/Screenshot 2024-10-04 at 11.38.12.png)
 
 **Sage AI** is an intelligent recommendation system that uses various AI techniques to provide personalized suggestions based on natural language inputs. This application leverages the power of AI to semantically understand user queries and offer recommendations in a user-friendly interface.
 
@@ -109,23 +109,3 @@ npm run dev
 
 This will start the development server at http://localhost:3000.
 
-Running the Backend
-
-Navigate to the backend-proxy directory and run the backend as described in the Backend Proxy section.
-
-The frontend will communicate with the backend to fetch recommendations.
-
-Contributing
-
-We welcome contributions to Sage AI! To contribute:
-
-	1.	Fork the repository
-	2.	Create a new branch for your feature/fix
-	3.	Make your changes and test them thoroughly
-	4.	Submit a pull request
-
-License
-
-This project is licensed under the MIT License. See the LICENSE file for more details.
-
-This markdown file is ready to be placed into your project as `README.md`. Just adjust the content if necessary, such as URLs, dependencies, and environment variables specific to your setup.
