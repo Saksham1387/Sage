@@ -5,7 +5,7 @@ export async function POST(request: Request) {
 
   try {
     const response = await fetch(
-      `http://127.0.0.1:5000/api/query?text=${query}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/query?text=${query}`,
       {
         method: "GET",
         headers: {
@@ -24,7 +24,7 @@ export async function POST(request: Request) {
 
 export async function GET() {
   try {
-    const response = await fetch(`http://127.0.0.1:5000/`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
