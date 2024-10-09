@@ -1,8 +1,21 @@
 import { useState, useEffect } from "react";
 import { ChevronDown } from "lucide-react"; // Tailwind Heroicons for the dropdown arrow
 
-export default function Example({ products }: { products: any[] }) {
-  const [sortedProducts, setSortedProducts] = useState<any[]>([]);
+interface Product {
+  product_id: string; // Adjust the type according to your actual data structure
+  product_name_y: string;
+  product_url_y: string;
+  product_images_y: string[];
+  product_description_y: string;
+  product_price_y: string;
+}
+
+interface ExampleProps {
+  products: Product[];
+}
+
+export default function Example({ products }: ExampleProps) {
+  const [sortedProducts, setSortedProducts] = useState<Product[]>([]);
   const [sortOrder, setSortOrder] = useState("default"); // "default", "lowToHigh", or "highToLow"
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(12); // Number of items per page
@@ -44,7 +57,10 @@ export default function Example({ products }: { products: any[] }) {
   // Pagination logic
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentProducts = sortedProducts.slice(indexOfFirstItem, indexOfLastItem);
+  const currentProducts = sortedProducts.slice(
+    indexOfFirstItem,
+    indexOfLastItem
+  );
   const totalPages = Math.ceil(sortedProducts.length / itemsPerPage);
 
   const handlePageChange = (pageNumber: number) => {
@@ -91,7 +107,6 @@ export default function Example({ products }: { products: any[] }) {
               } = productData;
 
               const cleanImages =
-                //@ts-ignore
                 product_images_y?.map((image) => cleanImageUrl(image)) || [];
 
               return (
@@ -151,10 +166,7 @@ export default function Example({ products }: { products: any[] }) {
           ) : (
             <div className="">
               <div className="w-40 h-40">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 200 200"
-                >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
                   <circle
                     fill="#254f49"
                     stroke="#254f49"
