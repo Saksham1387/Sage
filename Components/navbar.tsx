@@ -1,3 +1,4 @@
+import Image from 'next/image'
 export function Navbar() {
   return (
     <div className="w-full bg-white text-white h-20 flex items-center justify-center">
@@ -7,7 +8,7 @@ export function Navbar() {
             window.location.reload();
           }}
         >
-          <img alt="logo" src="/logo.png" className="h-[300px] w-[300px]"></img>
+          <Image alt="logo" src="/logo.png" className="h-[300px] w-[300px]"></Image>
         </button>
       </div>
     </div>
