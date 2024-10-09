@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import { ChevronDown } from "lucide-react"; // Tailwind Heroicons for the dropdown arrow
 
-
 export default function Example({ products }: { products: any[] }) {
   const [sortedProducts, setSortedProducts] = useState<any[]>([]);
   const [sortOrder, setSortOrder] = useState("default"); // "default", "lowToHigh", or "highToLow"
-
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(12); // Number of items per page
 
   const originalProducts = products || [];
 
@@ -38,6 +38,17 @@ export default function Example({ products }: { products: any[] }) {
 
       setSortedProducts(sorted);
     }
+    setCurrentPage(1); // Reset to the first page when sorting changes
+  };
+
+  // Pagination logic
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentProducts = sortedProducts.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(sortedProducts.length / itemsPerPage);
+
+  const handlePageChange = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
   };
 
   return (
@@ -68,8 +79,8 @@ export default function Example({ products }: { products: any[] }) {
         </div>
 
         <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-          {Array.isArray(sortedProducts) && sortedProducts.length > 0 ? (
-            sortedProducts.map((product) => {
+          {Array.isArray(currentProducts) && currentProducts.length > 0 ? (
+            currentProducts.map((product) => {
               const productData = product || {};
               const {
                 product_name_y,
@@ -138,13 +149,93 @@ export default function Example({ products }: { products: any[] }) {
               );
             })
           ) : (
-            <div className=""> 
-            <div className="w-40 h-40">
-        
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><circle fill="#254f49" stroke="#254f49" stroke-width="15" r="15" cx="40" cy="100"><animate attributeName="opacity" calcMode="spline" dur="2" values="1;0;1;" keySplines=".5 0 .5 1;.5 0 .5 1" repeatCount="indefinite" begin="-.4"></animate></circle><circle fill="#254f49" stroke="#254f49" stroke-width="15" r="15" cx="100" cy="100"><animate attributeName="opacity" calcMode="spline" dur="2" values="1;0;1;" keySplines=".5 0 .5 1;.5 0 .5 1" repeatCount="indefinite" begin="-.2"></animate></circle><circle fill="#254f49" stroke="#254f49" stroke-width="15" r="15" cx="160" cy="100"><animate attributeName="opacity" calcMode="spline" dur="2" values="1;0;1;" keySplines=".5 0 .5 1;.5 0 .5 1" repeatCount="indefinite" begin="0"></animate></circle></svg>
-            </div>
+            <div className="">
+              <div className="w-40 h-40">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 200 200"
+                >
+                  <circle
+                    fill="#254f49"
+                    stroke="#254f49"
+                    strokeWidth="15"
+                    r="15"
+                    cx="40"
+                    cy="100"
+                  >
+                    <animate
+                      attributeName="opacity"
+                      calcMode="spline"
+                      dur="2"
+                      values="1;0;1;"
+                      keySplines=".5 0 .5 1;.5 0 .5 1"
+                      repeatCount="indefinite"
+                      begin="-.4"
+                    ></animate>
+                  </circle>
+                  <circle
+                    fill="#254f49"
+                    stroke="#254f49"
+                    strokeWidth="15"
+                    r="15"
+                    cx="100"
+                    cy="100"
+                  >
+                    <animate
+                      attributeName="opacity"
+                      calcMode="spline"
+                      dur="2"
+                      values="1;0;1;"
+                      keySplines=".5 0 .5 1;.5 0 .5 1"
+                      repeatCount="indefinite"
+                      begin="-.2"
+                    ></animate>
+                  </circle>
+                  <circle
+                    fill="#254f49"
+                    stroke="#254f49"
+                    strokeWidth="15"
+                    r="15"
+                    cx="160"
+                    cy="100"
+                  >
+                    <animate
+                      attributeName="opacity"
+                      calcMode="spline"
+                      dur="2"
+                      values="1;0;1;"
+                      keySplines=".5 0 .5 1;.5 0 .5 1"
+                      repeatCount="indefinite"
+                      begin="0"
+                    ></animate>
+                  </circle>
+                </svg>
+              </div>
             </div>
           )}
+        </div>
+
+        {/* Pagination Controls */}
+        <div className="mt-8 flex justify-center items-center">
+          <button
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+            className="mx-2 px-4 py-2 border rounded-md text-sm font-medium bg-white hover:bg-gray-100 disabled:opacity-50"
+          >
+            Previous
+          </button>
+
+          <span className="mx-2 text-sm font-medium">
+            Page {currentPage} of {totalPages}
+          </span>
+
+          <button
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}
+            className="mx-2 px-4 py-2 border rounded-md text-sm font-medium bg-white hover:bg-gray-100 disabled:opacity-50"
+          >
+            Next
+          </button>
         </div>
       </div>
     </div>

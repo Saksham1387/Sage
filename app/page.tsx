@@ -21,9 +21,7 @@ export default function Home() {
           },
           body: JSON.stringify({ query }), 
         });
-
         const data = await response.json();
-        console.log(data);
         setProducts(data); 
       } catch (error) {
         console.error("Error fetching products:", error);
@@ -37,17 +35,13 @@ export default function Home() {
   useEffect(() => {
   const fetchProducts = async () => {
       try {
-        const query1 = "jeans shirt t-shirt dress"
         const response = await fetch("/api/search", {
-          method: "POST",
+          method: "GET",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ query:query1 }), 
         });
-
         const data = await response.json();
-        console.log(data);
         setProducts(data); 
       } catch (error) {
         console.error("Error fetching products:", error);
