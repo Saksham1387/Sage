@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { ChevronDown } from "lucide-react"; // Tailwind Heroicons for the dropdown arrow
-import Image from 'next/image'
 
 interface Product {
   product_id: string; // Adjust the type according to your actual data structure
@@ -117,7 +116,7 @@ export default function Example({ products }: ExampleProps) {
                 >
                   <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
                     {cleanImages.length > 0 ? (
-                      <Image
+                      <img
                         alt={product_name_y || "Product image"}
                         src={cleanImages[0]}
                         className="h-full w-full object-cover object-center lg:h-full lg:w-full"
