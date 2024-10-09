@@ -7,8 +7,10 @@ import joblib
 import pandas as pd
 import faiss
 from sentence_transformers import SentenceTransformer
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 es = Elasticsearch(
     "http://localhost:9200",
